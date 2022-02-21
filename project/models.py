@@ -16,7 +16,7 @@ class Project(models.Model):
         (ANDRIOD, 'Android'),
     ]
 
-    title = models.CharField(max_length=150, verbose_name='Titre')
+    title = models.CharField(max_length=255, verbose_name='Titre')
     description = models.TextField(max_length=2048)
     type = models.CharField(max_length=30, choices=TYPE_CHOICES, verbose_name='Type')
     author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -54,7 +54,7 @@ class Issue(models.Model):
         (IN_PROGRESS, 'En cours'),
         (DONE, 'Terminé')
     ]
-    title = models.CharField(max_length=150, verbose_name='Titre')
+    title = models.CharField(max_length=255, verbose_name='Titre')
     description = models.TextField(max_length=2048)
     tag = models.CharField(max_length=30, choices=TAG_CHOICES, verbose_name='Tag')
     priority = models.CharField(max_length=30, choices=PRIORITY_CHOICES, verbose_name='Priorité')
