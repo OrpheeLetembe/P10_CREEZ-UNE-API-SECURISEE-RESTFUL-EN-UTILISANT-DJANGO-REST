@@ -12,7 +12,17 @@ class ProjectViewset(ModelViewSet):
         return Project.objects.all()
 
 
+class IssueViewset(ModelViewSet):
 
+    serializer_class = IssueSerializer
 
+    def get_queryset(self):
+        return Issue.objects.all()
 
+class CommentViewset(ModelViewSet):
+
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.all()
 

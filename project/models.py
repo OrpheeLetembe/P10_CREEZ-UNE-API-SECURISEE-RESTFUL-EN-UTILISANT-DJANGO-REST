@@ -94,7 +94,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.description
 
-"""
+
 class Contributor(models.Model):
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -105,5 +105,5 @@ class Contributor(models.Model):
         unique_together = ('user_id', 'project_id')
 
 
-"""
+
 
