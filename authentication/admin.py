@@ -9,3 +9,5 @@ admin.site.index_title = 'Interface administrateur'
 
 
 admin.site.register(models.User)
+
+

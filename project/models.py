@@ -4,22 +4,19 @@ from django.db import models
 
 class Project(models.Model):
 
-    BACKEND = 'BACKEND'
-    FRONTEND = 'FRONTEND'
-    IOS = 'IOS'
-    ANDRIOD = 'ANDROID'
+    TYPE_CHOICES = (
+        ('back-end', 'Back-end'),
+        ('front-end', 'front-end'),
+        ('Ios', 'Ios'),
+        ('android', 'Android')
 
-    TYPE_CHOICES = [
-        (BACKEND, 'back-end'),
-        (FRONTEND, 'front-end'),
-        (IOS, 'iOS'),
-        (ANDRIOD, 'Android'),
-    ]
+    )
 
     title = models.CharField(max_length=255, verbose_name='Titre')
     description = models.TextField(max_length=2048)
     type = models.CharField(max_length=30, choices=TYPE_CHOICES, verbose_name='Type')
-    author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Auteur')
+    author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='Auteur')
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Contributor', related_name='users')
 
     class Meta:
         verbose_name = 'Projet'
@@ -31,38 +28,29 @@ class Project(models.Model):
 
 class Issue(models.Model):
 
-    BUG = 'BUG'
-    IMPROVEMENT = 'IMPROVEMENT'
-    TASK = 'TASK'
-    WEAK = 'WEAK'
-    AVERAGE = 'AVERAGE'
-    HIGH = 'HIGH'
-    TO_DO = 'TO_DO'
-    IN_PROGRESS = ' IN_PROGRESS'
-    DONE = 'DONE'
+    TAG_CHOICES = (
+        ('bug', 'Bug'),
+        ('improvement', 'Amélioration'),
+        ('task', 'Tâche'),
+    )
 
-    TAG_CHOICES = [
-        (BUG, 'Bug'),
-        (IMPROVEMENT, 'Amélioration'),
-        (TASK, 'Tâche'),
-    ]
+    PRIORITY_CHOICES = (
+        ('weak', 'Faible'),
+        ('average', 'Moyenne'),
+        ('high', 'Elevée'),
+    )
 
-    PRIORITY_CHOICES = [
-        (WEAK, 'Faible'),
-        (AVERAGE, 'Moyenne'),
-        (HIGH, 'Elevée'),
-    ]
+    STATUS_CHOICES = (
+        ('to do', 'A faire'),
+        ('in progress', 'En cours'),
+        ('done', 'Terminée'),
+    )
 
-    STATUS_CHOICES = [
-        (TO_DO, 'A faire'),
-        (IN_PROGRESS, 'En cours'),
-        (DONE, 'Terminé')
-    ]
     title = models.CharField(max_length=255, verbose_name='Titre')
     description = models.TextField(max_length=2048)
     tag = models.CharField(max_length=30, choices=TAG_CHOICES, verbose_name='Tag')
     priority = models.CharField(max_length=30, choices=PRIORITY_CHOICES, verbose_name='Priorité')
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name='Projet')
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='issues')
     status = models.CharField(max_length=30, choices=STATUS_CHOICES, verbose_name='Statut')
     author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='author',
                                        verbose_name='auteur')
@@ -84,7 +72,7 @@ class Comment(models.Model):
     description = models.TextField(max_length=2048)
     author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comment_user',
                                        verbose_name='Auteur')
-    issues_id = models.ForeignKey(Issue, on_delete=models.CASCADE)
+    issues_id = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='comments')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="Date de création")
 
     class Meta:
@@ -96,13 +84,24 @@ class Comment(models.Model):
 
 
 class Contributor(models.Model):
+
+    RESPONSABILE = 'RESPONSABILE'
+    CONTRIBUTOR = 'CONTRIBUTOR'
+
+    ROLE_CHOICES =(
+        (RESPONSABILE, 'Responsable'),
+        (CONTRIBUTOR, 'Contibuteur')
+    )
+
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-    permission = ''
-    role = ''
+    #permission = ''
+    role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name='Role')
 
     class Meta:
         unique_together = ('user_id', 'project_id')
+        verbose_name = 'Contributeur'
+        verbose_name_plural = 'contributeurs'
 
 
 
