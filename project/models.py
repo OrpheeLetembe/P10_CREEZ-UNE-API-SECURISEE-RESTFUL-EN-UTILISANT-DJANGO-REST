@@ -16,6 +16,7 @@ class Project(models.Model):
     description = models.TextField(max_length=2048)
     type = models.CharField(max_length=30, choices=TYPE_CHOICES, verbose_name='Type')
     author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='Auteur')
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name="Date de création")
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Contributor', related_name='users')
 
     class Meta:
@@ -102,6 +103,8 @@ class Contributor(models.Model):
         unique_together = ('user_id', 'project_id')
         verbose_name = 'Contributeur'
         verbose_name_plural = 'contributeurs'
+
+
 
 
 
