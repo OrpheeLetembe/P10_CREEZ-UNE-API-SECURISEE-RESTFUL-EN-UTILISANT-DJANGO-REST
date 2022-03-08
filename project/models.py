@@ -15,7 +15,8 @@ class Project(models.Model):
     title = models.CharField(max_length=255, verbose_name='Titre')
     description = models.TextField(max_length=2048)
     type = models.CharField(max_length=30, choices=TYPE_CHOICES, verbose_name='Type')
-    author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='Auteur')
+    author_user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True,
+                                       verbose_name='Auteur')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="Date de création")
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Contributor', related_name='users')
 
@@ -25,6 +26,9 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+    #def get_users(self):
+       #return self.users
 
 
 class Issue(models.Model):
@@ -96,7 +100,7 @@ class Contributor(models.Model):
 
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-    #permission = ''
+    # permission =
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name='Role')
 
     class Meta:

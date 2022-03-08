@@ -1,14 +1,16 @@
-from django.http import request
+
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from django.db.models import Q
-from rest_framework import permissions
+
 
 from authentication.models import User
-from project.models import Project, Issue, Comment, Contributor
+from authentication.serializers import UserSerializer
+from project.models import Project, Issue, Comment
 from project.serializers import ProjectListSerializer, ProjectDetailSerializer,  IssueListSerializer, \
     IssueDetailSerializer, CommentSerializer
+from project.permissions import IsCurrentUserOwner
 
 
 class MultipleSerializerMixim:
@@ -25,9 +27,10 @@ class ProjectViewset(MultipleSerializerMixim, ModelViewSet):
 
     serializer_class = ProjectListSerializer
     detail_serializer_class = ProjectDetailSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsCurrentUserOwner,)
 
     def get_queryset(self):
+        # filter projects related to the connected user
         user = self.request.user
         return Project.objects.filter(Q(users=user) | Q(author_user_id=user))
 
@@ -44,16 +47,23 @@ class ProjectViewset(MultipleSerializerMixim, ModelViewSet):
         serializer = ProjectListSerializer(new_project)
         return Response(serializer.data)
 
-    def destroy(self, request, *args, **kwargs):
-        current_user = request.user
-        if current_user == "author_user_id":
-            project = self.get_object()
-            project.delete()
-            response_message = {"message": "projet supprimer"}
-        else:
-            response_message = {"message": "pas auth"}
+    def update(self, request, *args, **kwargs):
+        project = self.get_object()
 
-        return Response(response_message)
+        project_data = request.data
+        project.title = project_data["title"]
+        project.description = project_data["description"]
+        project.type = project_data["type"]
+        project.author_user_id = request.user
+
+        project.save()
+        serializer = ProjectListSerializer(project)
+        return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        project = self.get_object()
+        project.delete()
+        return Response()
 
     @action(detail=True, methods=['post'], url_path='users')
     def add_users(self, request, *args, **kwargs):
@@ -68,16 +78,13 @@ class ProjectViewset(MultipleSerializerMixim, ModelViewSet):
             project.save()
             serializer = ProjectDetailSerializer(project)
             return Response(serializer.data)
-"""
-@action(detail=True, methods=['get'], url_path='users')
+
+    @action(detail=True, url_path='users')
     def get_users(self, request, *args, **kwargs):
         project = self.get_object()
         project_users = project.users.all()
-        print(project_users)
-        return Response(project_users)
-
-
-"""
+        serializer = UserSerializer(project_users, many=True)
+        return Response(serializer.data)
 
 
 class IssueViewset(MultipleSerializerMixim, ModelViewSet):
@@ -87,7 +94,7 @@ class IssueViewset(MultipleSerializerMixim, ModelViewSet):
 
     def get_queryset(self):
         queryset = Issue.objects.all()
-        project_id = self.request.GET.get(' project_id')
+        project_id = self.request.GET.get('project_id')
         if project_id:
             queryset = queryset.filter(project_id=project_id)
         return queryset

@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-
-from project.models import Project, Issue, Comment, Contributor
+from authentication.serializers import UserSerializer
+from project.models import Project, Issue, Comment
 
 
 class CommentSerializer(ModelSerializer):
@@ -33,29 +33,22 @@ class IssueDetailSerializer(ModelSerializer):
         serializer = CommentSerializer(queryset, many=True)
         return serializer.data
 
-"""
-class ContributorSerializer(ModelSerializer):
-
-    class Meta:
-        model = Contributor
-        fields = '__all__'
-"""
 
 class ProjectListSerializer(ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'type', 'author_user_id']
+        fields = ['id', 'title', 'description', 'type', 'author_user_id', 'users']
 
 
 class ProjectDetailSerializer(ModelSerializer):
 
     issues = SerializerMethodField()
-    # users = SerializerMethodField()
+   # users = SerializerMethodField()
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'type', 'issues', 'users']
+        fields = ['id', 'title', 'description', 'type', 'author_user_id', 'issues', 'users']
 
     def get_issues(self, instance):
         queryset = instance.issues.all()
@@ -64,6 +57,6 @@ class ProjectDetailSerializer(ModelSerializer):
 """
     def get_users(self, instance):
         queryset = instance.users.all()
-        serializer = ContributorSerializer(queryset, many=True)
+        serializer = UserSerializer(queryset, many=True)
         return serializer.data
 """
