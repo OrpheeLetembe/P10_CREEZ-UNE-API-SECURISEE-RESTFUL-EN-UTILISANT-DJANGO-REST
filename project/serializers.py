@@ -38,13 +38,13 @@ class ProjectListSerializer(ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'type', 'author_user_id', 'users']
+        fields = ['id', 'title', 'description', 'type', 'author_user_id']
 
 
 class ProjectDetailSerializer(ModelSerializer):
 
     issues = SerializerMethodField()
-   # users = SerializerMethodField()
+    #users = SerializerMethodField()
 
     class Meta:
         model = Project
@@ -59,4 +59,5 @@ class ProjectDetailSerializer(ModelSerializer):
         queryset = instance.users.all()
         serializer = UserSerializer(queryset, many=True)
         return serializer.data
+
 """

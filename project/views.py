@@ -66,7 +66,7 @@ class ProjectViewset(MultipleSerializerMixim, ModelViewSet):
         return Response()
 
     @action(detail=True, methods=['post'], url_path='users')
-    def add_users(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         data = request.data
         project = self.get_object()
         project_users = project.users.all()
@@ -79,11 +79,12 @@ class ProjectViewset(MultipleSerializerMixim, ModelViewSet):
             serializer = ProjectDetailSerializer(project)
             return Response(serializer.data)
 
-    @action(detail=True, url_path='users')
+    @action(detail=True, methods=['get'], url_path='users')
     def get_users(self, request, *args, **kwargs):
         project = self.get_object()
         project_users = project.users.all()
         serializer = UserSerializer(project_users, many=True)
+
         return Response(serializer.data)
 
 

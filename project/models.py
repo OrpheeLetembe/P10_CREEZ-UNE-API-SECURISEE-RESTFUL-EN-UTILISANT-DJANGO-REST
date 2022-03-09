@@ -28,7 +28,7 @@ class Project(models.Model):
         return self.title
 
     #def get_users(self):
-       #return self.users
+        #return self.users
 
 
 class Issue(models.Model):
@@ -98,8 +98,8 @@ class Contributor(models.Model):
         (CONTRIBUTOR, 'Contibuteur')
     )
 
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Utilisateur')
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name='Projet')
     # permission =
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name='Role')
 
