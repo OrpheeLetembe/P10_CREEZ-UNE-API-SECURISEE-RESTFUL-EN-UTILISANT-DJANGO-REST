@@ -1,9 +1,11 @@
 from rest_framework import permissions
 
-from project.models import Contributor
 
+class IsAuthor(permissions.BasePermission):
 
-class IsProjectAuthor(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.user.is_authenticated:
+            return True
 
     def has_object_permission(self, request, view, obj):
 
@@ -11,3 +13,6 @@ class IsProjectAuthor(permissions.BasePermission):
             return True
         else:
             return obj.author_user_id == request.user
+
+
+

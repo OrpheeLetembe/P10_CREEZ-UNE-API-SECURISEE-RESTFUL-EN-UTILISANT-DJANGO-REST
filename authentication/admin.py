@@ -8,6 +8,10 @@ admin.site.site_title = 'SoftDesk - Interface administrateur'
 admin.site.index_title = 'Interface administrateur'
 
 
-admin.site.register(models.User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username')
+
+
+admin.site.register(models.User, UserAdmin)
 
 

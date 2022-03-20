@@ -1,7 +1,9 @@
-from rest_framework import routers
+from django.urls import path
 
-from authentication.views import SignupViewset
 
-router = routers.SimpleRouter()
+from authentication.views import SignupView
 
-router.register('signup', SignupViewset, basename='signup')
+urlpatterns = [
+    path('signup/', SignupView.as_view()),
+
+    ]

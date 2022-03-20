@@ -2,7 +2,14 @@ from django.conf import settings
 from django.db import models
 
 
-class Project(models.Model):
+class BaseModel(models.Model):
+    objects = models.Manager()
+
+    class Meta:
+        abstract = True
+
+
+class Project(BaseModel):
 
     TYPE_CHOICES = (
         ('back-end', 'Back-end'),
@@ -85,12 +92,12 @@ class Comment(models.Model):
         return self.description
 
 
-class Contributor(models.Model):
+class Contributor(BaseModel):
 
     RESPONSABILE = 'RESPONSABILE'
     CONTRIBUTOR = 'CONTRIBUTOR'
 
-    ROLE_CHOICES =(
+    ROLE_CHOICES = (
         (RESPONSABILE, 'Responsable'),
         (CONTRIBUTOR, 'Contibuteur')
     )
