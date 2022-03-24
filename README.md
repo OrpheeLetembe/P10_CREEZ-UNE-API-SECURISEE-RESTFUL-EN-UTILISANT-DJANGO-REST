@@ -27,9 +27,11 @@ Les étapes 1 à 5 ne sont requises que pour l'installation initiale. Pour les l
 Une fois que vous avez lancé le serveur, vous devez vous en registrer et vous connecter afin d’interagir avec SoftDesk_API.
 SoftDesk_API peut être interrogée à partir des points d'entrée commençant par l'url de base http://127.0.0.1:8000/api/
 
+L'API fournit les points de terminaison suivants:
 
 
-|Endpoint|Méthode HTTP|URI|
+
+|Point de terminaisont|Méthode HTTP|URI|
 |-----------------|------------|--------------|
 | Inscription de l'utilisateur            |  POST |/signup/|
 | Connexion de l'utilisateur	          |  POST  |/login/|
