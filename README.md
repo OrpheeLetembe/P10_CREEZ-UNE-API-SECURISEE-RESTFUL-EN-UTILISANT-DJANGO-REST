@@ -33,9 +33,9 @@ SoftDesk_API peut être interrogée à partir des points d'entrée commençant p
 |-----------------|------------|--------------|
 | Inscription de l'utilisateur            |  POST |/signup/|
 | Connexion de l'utilisateur	          |  POST  |/login/|
-| Récupérer la liste de tous les projets |  GET|/projects/|
+| Récupérer la liste de tous les projets rattachés à l'utilisateur connecté |  GET|/projects/|
 | Créer un projet            |  POST|/projects/|
-| Récupérer les détails d'un projet (project) via son id |  GET |/projects/{id}/|
+| Récupérer les détails d'un projet via son id |  GET |/projects/{id}/|
 | Mettre à jour un projet             |  PUT |/projects/{id}/|
 | Supprimer un projet et ses problèmes |  DELETE|/ projects/{id}/|
 | Ajouter un collaborateur à un projet |  POST|/ projects/{id}/users/|
@@ -47,7 +47,7 @@ SoftDesk_API peut être interrogée à partir des points d'entrée commençant p
 | Supprimer un problème d’un projet|  DELETE|/projects/{id}/issues/{id}|
 | Créer des commentaires sur un problème|  POST|/projects/{id}/issues/{id}/comments/|
 | Récupérer la liste des commentaires d’un problème|  GET|/projects/{id}/issues/{id}/comments/|
-| Récupérer un commentaires |  GET|/projects/{id}/issues/{id}/comments/{id}|
+| Récupérer un commentaire |  GET|/projects/{id}/issues/{id}/comments/{id}|
 | Modifier un commentaire|  PUT|/projects/{id}/issues/{id}/comments/{id}|
 | supprimer un commentaire|  DELETE|/projects/{id}/issues/{id}/comments/{id}|
 
