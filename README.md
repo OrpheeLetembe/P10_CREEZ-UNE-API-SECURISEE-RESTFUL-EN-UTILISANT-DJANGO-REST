@@ -31,7 +31,7 @@ L'API fournit les points de terminaison suivants:
 
 
 
-|Point de terminaisont|Méthode HTTP|URI|
+|Point de terminaison|Méthode HTTP|URI|
 |-----------------|------------|--------------|
 | Inscription de l'utilisateur            |  POST |/signup/|
 | Connexion de l'utilisateur	          |  POST  |/login/|
