@@ -1,6 +1,4 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
-from django.contrib.auth.password_validation import validate_password
 
 from .models import User
 
@@ -8,6 +6,7 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     password2 = serializers.CharField(write_only=True, required=True)
+    email = serializers.CharField()
 
     class Meta:
         model = User
@@ -22,6 +21,11 @@ class UserSerializer(serializers.ModelSerializer):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError({"password": "Password fields didn't match."})
         return attrs
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError('"Un utilisateur avec cet email existe déjà."')
+        return value
 
     def create(self, validated_data):
         user = User.objects.create(

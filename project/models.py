@@ -2,14 +2,7 @@ from django.conf import settings
 from django.db import models
 
 
-class BaseModel(models.Model):
-    objects = models.Manager()
-
-    class Meta:
-        abstract = True
-
-
-class Project(BaseModel):
+class Project(models.Model):
 
     TYPE_CHOICES = (
         ('back-end', 'Back-end'),
@@ -74,7 +67,7 @@ class Issue(models.Model):
         verbose_name_plural = 'Problèmes'
 
     def __str__(self):
-        return self.title
+        return "id:{}, titre:{}".format(self.id, self.title)
 
 
 class Comment(models.Model):
@@ -92,7 +85,7 @@ class Comment(models.Model):
         return self.description
 
 
-class Contributor(BaseModel):
+class Contributor(models.Model):
 
     RESPONSABILE = 'RESPONSABILE'
     CONTRIBUTOR = 'CONTRIBUTOR'

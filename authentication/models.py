@@ -8,5 +8,5 @@ class User(AbstractUser):
         verbose_name_plural = 'Utilisateurs'
 
     def __str__(self):
-        return self.username
+        return "id:{}, username:{}".format(self.id, self.username)
 
