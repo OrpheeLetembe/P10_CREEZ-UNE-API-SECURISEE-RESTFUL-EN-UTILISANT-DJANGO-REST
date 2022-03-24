@@ -16,7 +16,7 @@ Cette API exécutable localement peut être installée en suivant les étapes d�
 - $ python -m venv env sous windows `
 - $ python3 -m venv env sous macos ou linux.
 4.	Activez l'environnement virtuel :
- 	- $ env\Scripts\activate sous windows 
+- $ env\Scripts\activate sous windows 
 - $ source env/bin/activate`sous macos ou linux.
 5.	Installez les dépendances du projet avec la commande $ pip install -r requirements.txt
 6.	Démarrer le serveur avec $ python manage.py runserver
