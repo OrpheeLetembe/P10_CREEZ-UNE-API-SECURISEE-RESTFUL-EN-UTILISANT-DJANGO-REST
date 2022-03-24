@@ -38,8 +38,8 @@ SoftDesk_API peut être interrogée à partir des points d'entrée commençant p
 | Récupérer les détails d'un projet (project) via son id |  GET |/projects/{id}/|
 | Mettre à jour un projet             |  PUT |/projects/{id}/|
 | Supprimer un projet et ses problèmes |  DELETE|/ projects/{id}/|
-| Ajouter un collaborateur à un projet |  POST|/ projects/{id}/users|
-| Récupérer la liste de tous les collaborateurs d’un projet |  GET|/ projects/{id}/users|
+| Ajouter un collaborateur à un projet |  POST|/ projects/{id}/users/|
+| Récupérer la liste de tous les collaborateurs d’un projet |  GET|/ projects/{id}/users/|
 | Supprimer un collaborateur d’un projet | DELETE|/ projects/{id}/users/{ID}|
 | Créer un problème dans un projet|  POST|/projects/{id}/issues/|
 | Récupérer la liste de tous les problèmes dans un projet|  GET|/projects/{id}/issues/|
