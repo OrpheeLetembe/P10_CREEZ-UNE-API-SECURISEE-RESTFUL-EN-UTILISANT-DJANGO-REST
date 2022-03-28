@@ -24,7 +24,7 @@ Cette API exécutable localement peut être installée en suivant les étapes d�
 Les étapes 1 à 5 ne sont requises que pour l'installation initiale. Pour les lancements ultérieurs de l'API, il suffit d'exécuter les étapes 4 et 6 à partir du répertoire racine du projet.
 
 ## Documentation des points d'entrée
-Une fois que vous avez lancé le serveur, vous devez vous en registrer et vous connecter afin d’interagir avec SoftDesk_API.
+Une fois que vous avez lancé le serveur, vous devez vous enregistrer et vous connecter afin d’interagir avec SoftDesk_API.
 SoftDesk_API peut être interrogée à partir des points d'entrée commençant par l'url de base http://127.0.0.1:8000/api/
 
 L'API fournit les points de terminaison suivants:
