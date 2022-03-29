@@ -53,4 +53,7 @@ L'API fournit les points de terminaison suivants:
 | Modifier un commentaire|  PUT|/projects/{id}/issues/{id}/comments/{id}|
 | supprimer un commentaire|  DELETE|/projects/{id}/issues/{id}/comments/{id}|
 
+Vous trouvez également une documentation plus formelle via le lien ci-dessous:
+https://documenter.getpostman.com/view/17381969/UVypxw3b
+
 
